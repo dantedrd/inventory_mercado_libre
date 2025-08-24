@@ -53,7 +53,6 @@ La solución usa **Arquitectura Hexagonal (Ports & Adapters)** y se comunica **p
 
 ---
 
-A continuación se muestra un diagrama de componentes:
 ![Arquitectura de la plataforma](Diagrama_componentes.jpg)
 
 
