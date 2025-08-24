@@ -1,0 +1,17 @@
+package com.mercadolibre.inventory.shared.commands;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class CommitCommand {
+    @NotBlank
+    String sku;
+
+    @NotBlank
+    String reservationId;
+}
