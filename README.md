@@ -39,6 +39,13 @@ La solución usa **Arquitectura Hexagonal (Ports & Adapters)** y se comunica **p
 - **Persistencia**: `store_outbox` (comandos pendientes), `store_event_log` (inbox con `eventId`), `inventory_cache` (proyección), y opcional `outbound_reservation` (saga local).
 - **Patrones**: *Transactional Outbox* + *Inbox/Proyección idempotente*. Gate por `version` para aplicar sólo cambios más nuevos.
 
+- ### 3) shared-service
+- - **Responsabilidad**: en este componente se dejan todas las clases y utilidades que sean de uso general para ambos servicios.
+ 
+  acontinuacion se muestra un diagrama de como esta estructurado
+![Arquitectura de la plataforma](Diagrama_componentes.jpg)
+
+
 ---
 
 ## 🔁 Topología de mensajería (RabbitMQ)
