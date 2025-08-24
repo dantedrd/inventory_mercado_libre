@@ -107,6 +107,7 @@ docker compose up -d
 # Central:     http://localhost:8082
 # Store:       http://localhost:8081
 
+---
 
 ## Demo en AWS (EC2 + Docker Compose)
 
