@@ -1,6 +1,6 @@
 # Inventory Platform — Arquitectura (Hexagonal + Event-Driven)
 
-![Arquitectura de la plataforma](docs/architecture.jpg)
+![Arquitectura de la plataforma](Diagrama_mercadolibre.jpg)
 
 Plataforma de inventario distribuido con **dos microservicios**:
 - **central-service**: *system of record* del inventario (items y reservas).
