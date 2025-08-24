@@ -106,6 +106,13 @@ docker compose up -d
 # RabbitMQ UI: http://localhost:15672 (guest/guest)
 # Central:     http://localhost:8082
 # Store:       http://localhost:8081
+```
 
-## ▶️ Demo (Docker aws EC2)
+## ▶️ Demo (Docker Compose)
+
+
+
+
+
+
 
