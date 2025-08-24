@@ -22,27 +22,38 @@ La solución usa **Arquitectura Hexagonal (Ports & Adapters)** y se comunica **p
 ## 🧩 Componentes
 
 ### 1) central-service
-- **Responsabilidad**: autoridad del inventario.
-- **Entradas**:
-  - Cola `central.commands` (bindings `command.inventory.*`) para *reserve/commit/cancel*.
-  - Endpoints REST: administración de items y consultas.
-- **Salidas**: publica eventos al exchange `inventory` (topic):
-  - `event.inventory.reserved|committed|cancelled`
-  - `event.item.upserted` (cuando se crea/actualiza un item)
-- **Persistencia**: tablas `items`, `reservations`, `outbox`.
-- **Patrones**: *Transactional Outbox* + *Outbox Relay* (publicación confiable).
+- **Responsabilidad:** autoridad del inventario (*system of record*).
+- **Entradas:**
+  - Cola `central.commands` (bindings `command.inventory.*`) para **reserve / commit / cancel**.
+  - Endpoints REST de **administración de ítems** y **consultas**.
+- **Salidas:** publica al exchange `inventory` (topic):
+  - `event.inventory.reserved | committed | cancelled`
+  - `event.item.upserted` (cuando se crea/actualiza un ítem; evento “compacted” con `version`).
+- **Persistencia:** tablas `items`, `reservations`, `outbox` (para publicación confiable).
+- **Patrones:** **Transactional Outbox** + **Outbox Relay**, control de concurrencia, **idempotencia** e **inmutabilidad de eventos**.
+- **Arquitectura:** hexagonal (casos de uso → puertos; adapters REST/JPA/AMQP).
+
+---
 
 ### 2) store-service
-- **Responsabilidad**: tienda local; genera **comandos** y mantiene **proyección**.
-- **Entradas**: cola `store.events` (bindings `event.inventory.*` y `event.item.*`).
-- **Salidas**: comandos `command.inventory.reserve|commit|cancel` (a través de **Outbox**).
-- **Persistencia**: `store_outbox` (comandos pendientes), `store_event_log` (inbox con `eventId`), `inventory_cache` (proyección), y opcional `outbound_reservation` (saga local).
-- **Patrones**: *Transactional Outbox* + *Inbox/Proyección idempotente*. Gate por `version` para aplicar sólo cambios más nuevos.
+- **Responsabilidad:** servicio por tienda; envía **comandos** al central y mantiene una **proyección local** para lectura.
+- **Entradas:** cola `store.events` (bindings `event.inventory.*` y `event.item.*`).
+- **Salidas:** comandos `command.inventory.reserve | commit | cancel` (a través de **Outbox**).
+- **Persistencia:** `store_outbox` (comandos pendientes), `store_event_log` (inbox con `eventId`), `inventory_cache` (proyección por `sku` y `version`), y opcional `outbound_reservation` (saga local).
+- **Patrones:** **Transactional Outbox** + **Inbox/Proyección idempotente**. **Gate por `version`** para aplicar solo cambios más nuevos. Opcional **anti-entropía** (rebuild por snapshot).
+- **Arquitectura:** hexagonal (casos de uso puros; adapters REST/AMQP/JPA).
 
-- ### 3) shared-service
-- - **Responsabilidad**: en este componente se dejan todas las clases y utilidades que sean de uso general para ambos servicios.
- 
-  acontinuacion se muestra un diagrama de como esta estructurado
+---
+
+### 3) inventory-shared (módulo común, **no** microservicio)
+- **Responsabilidad:** contener **contratos y utilidades compartidas** entre servicios.
+- **Incluye:** `Topics` (routing keys), DTOs/record de **comandos** y **eventos**, utilidades de serialización/validación y *fixtures* para tests.
+- **No incluye:** **entidades JPA**, **repositorios** ni adapters específicos de infraestructura (para evitar acoplamiento).
+- **Objetivo:** mantener **compatibilidad de contratos** y reutilizar código **independiente de frameworks**.
+
+---
+
+A continuación se muestra un diagrama de componentes:
 ![Arquitectura de la plataforma](Diagrama_componentes.jpg)
 
 
