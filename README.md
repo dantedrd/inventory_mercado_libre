@@ -106,3 +106,37 @@ docker compose up -d
 # RabbitMQ UI: http://localhost:15672 (guest/guest)
 # Central:     http://localhost:8082
 # Store:       http://localhost:8081
+
+
+## Demo en AWS (EC2 + Docker Compose)
+
+La solución está desplegada en una instancia EC2 usando **Docker Compose**. Cada microservicio expone **Swagger UI** para probar los endpoints.
+
+> **IP pública:** `18.222.29.73`  
+> **Perfiles:** los servicios corren con `SPRING_PROFILES_ACTIVE=docker`.
+
+### Endpoints públicos
+
+- **central-service**
+  - Base URL: `http://18.222.29.73:8082`
+  - Swagger UI: `http://18.222.29.73:8082/swagger-ui/index.html`
+
+- **store-service**
+  - Base URL: `http://18.222.29.73:8081`
+  - Swagger UI: `http://18.222.29.73:8081/swagger-ui/index.html`
+
+
+### Probar rápido
+
+```bash
+# 1) Crear/actualizar un ítem en el central
+curl -X POST http://18.222.29.73:8082/v1/admin/items \
+  -H "Content-Type: application/json" \
+  -d '{"sku":"SKU-001","onHand":100}'
+
+# 2) Enviar una reserva desde la tienda
+curl -X POST http://18.222.29.73:8081/v1/commands/reserve \
+  -H "Content-Type: application/json" \
+  -d '{"sku":"SKU-001","siteId":"BOG-01","reservationId":"R-123","qty":5}'
+
+
