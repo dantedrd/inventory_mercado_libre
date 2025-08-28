@@ -139,6 +139,17 @@ curl -X POST http://18.222.29.73:8081/v1/commands/reserve \
   -d '{"sku":"SKU-001","siteId":"BOG-01","reservationId":"R-123","qty":5}'
 
 
+# 🧠🤖 Prom ChatGPT
+
+Repositorio que documenta el proceso de creación del proyecto asistido por ChatGPT: prompts clave, decisiones técnicas y recursos útiles para reproducir o aprender del flujo.
+
+## 🔗 Conversación de referencia
+Puedes revisar el hilo completo de la conversación que dio origen a este proyecto aquí:
+**[Ver conversación en ChatGPT](https://chatgpt.com/share/68af5846-3b34-8013-ac9a-ecc55e36be07)**
+
+
+
+
 
 
 
