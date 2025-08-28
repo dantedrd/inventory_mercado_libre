@@ -147,6 +147,10 @@ Repositorio que documenta el proceso de creación del proyecto asistido por Chat
 Puedes revisar el hilo completo de la conversación que dio origen a este proyecto aquí:
 **[Ver conversación en ChatGPT](https://chatgpt.com/share/68af5846-3b34-8013-ac9a-ecc55e36be07)**
 
+## 🤖 Automatización con GitHub Copilot
+Para agilizar el desarrollo de **tests** y de **algunas clases repetitivas**, se utilizó **GitHub Copilot** directamente en el IDE.  
+> Nota: Todo el código generado fue **revisado y ajustado manualmente** para garantizar calidad, estilo y buenas prácticas.
+
 
 
 
