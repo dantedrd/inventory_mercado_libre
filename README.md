@@ -137,7 +137,7 @@ curl -X POST http://18.222.29.73:8082/v1/admin/items \
 curl -X POST http://18.222.29.73:8081/v1/commands/reserve \
   -H "Content-Type: application/json" \
   -d '{"sku":"SKU-001","siteId":"BOG-01","reservationId":"R-123","qty":5}'
-
+```
 
 # 🧠🤖 Prom ChatGPT
 
